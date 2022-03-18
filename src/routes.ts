@@ -14,6 +14,8 @@ import { FindAllAvailableController } from './modules/deliveries/useCases/findAl
 
 import { ensureAuthenticatedClient } from './middlewares/ensureAuthenticatedClient';
 
+import { ensureAuthenticatedDeliveryman } from './middlewares/ensureAuthenticatedDeliveryman';
+
 const routes = Router();
 
 const createClientController = new CreateClientController();
@@ -46,6 +48,10 @@ routes.post(
   createDeliveryController.handle
 );
 
-routes.get('/delivery/available', findAllAvailableController.handle);
+routes.get(
+  '/delivery/available',
+  ensureAuthenticatedDeliveryman,
+  findAllAvailableController.handle
+);
 
 export { routes };
